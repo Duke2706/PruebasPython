@@ -14,16 +14,19 @@ def elige_categoria():
     for idx, c in enumerate(categorias):
         print(f"{( idx + 1)}. {c}");
 
+
     finished = False
     while not finished:
-        selected = input("¿Que categoria eliges? escribe el nombre:\n")
-        for c in categorias:
-            if selected.lower() == c.lower():
+        selected = input("¿Que categoria eliges? escribe el número:\n")
+        try:
+            numero = int(selected)
+            if 0 <= numero - 1 < len(categorias):
                 clear()
-                return selected
-        else:
-            print(f"'{selected}' no es una categoria correcta")
-
+                return categorias[numero - 1]
+            else:
+                print(f"'{selected}' no es un número correcto de categoria")
+        except ValueError:
+            print(f"'{selected}' no es un número correcto de categoria")
 
 def elige_receta(directorio):
 
@@ -58,7 +61,7 @@ def muestra_receta():
     clear()
     categoria = elige_categoria()
     receta = elige_receta(categoria)
-    if receta is not "0":
+    if receta != "0":
         file = Path(directorio_base,categoria,receta)
         print(f"Receta: {receta}")
         print("-------------------------------------------------------")
